@@ -1,6 +1,6 @@
 env
 idea
-book_cleaned.csv
+books_cleaned.csv
 books_data_cleaned.csv
 books_with_categories.csv
 df_with_emotions.csv
