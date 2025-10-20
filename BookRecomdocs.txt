@@ -1,0 +1,128 @@
+BOOK RECOMMENDER SYSTEM PROJECT DOCUMENTATION
+================================================
+
+PROJECT OVERVIEW
+================
+This is a machine learning-powered book recommendation system that provides personalized book suggestions based on content similarity and sentiment analysis. The system analyzes book descriptions, extracts meaningful features, and performs vector-based similarity search to recommend books. It also classifies books into Fiction or Non-Fiction and analyzes emotions in book descriptions.
+
+OVERALL PROJECT FLOW
+====================
+1. Data is downloaded from Kaggle and cleaned in data exploration notebooks
+2. Books are categorized using zero-shot classification 
+3. Emotion analysis is performed on book descriptions
+4. Vector embeddings are created and stored in FAISS database
+5. A Gradio web interface allows users to search for book recommendations
+6. The system returns similar books based on user queries with filtering options
+
+FILE STRUCTURE AND PURPOSE
+==========================
+
+DATA FILES
+----------
+books_cleaned.csv - Initial cleaned dataset with basic book information and tagged descriptions
+books_with_categories.csv - Dataset with simplified categories (Fiction/Nonfiction) added
+df_with_emotions.csv - Final dataset with emotion scores for each book (anger, disgust, fear, joy, sadness, surprise, neutral)
+tagged_description.txt - Text file containing ISBN and description pairs for vector search
+
+NOTEBOOK FILES (Data Processing Pipeline)
+-----------------------------------------
+data-exploration.ipynb - Initial data exploration and cleaning
+- Downloads dataset from Kaggle using kagglehub
+- Analyzes missing values and data quality
+- Creates new features like age_of_book and word counts
+- Filters books with descriptions of 25+ words
+- Creates tagged_description field combining ISBN and description
+- Saves cleaned data to books_cleaned.csv
+
+Eda.ipynb - Extended exploratory data analysis
+- Similar to data-exploration.ipynb but with additional analysis
+- Creates correlation heatmaps
+- Analyzes word count distributions in descriptions
+- Generates books_data_cleaned.csv
+
+text_classification.ipynb - Book categorization system
+- Maps complex categories to simple Fiction/Nonfiction labels
+- Uses Facebook BART model for zero-shot classification
+- Handles missing categories by predicting them using book descriptions
+- Saves results to books_with_categories.csv
+
+sentiment_analysis.ipynb - Emotion analysis system
+- Uses J-Hartmann emotion classifier to analyze book descriptions
+- Splits descriptions into sentences for better emotion detection
+- Calculates emotion scores for: anger, disgust, fear, joy, sadness, surprise, neutral
+- Merges emotion data with book categories
+- Saves final dataset to df_with_emotions.csv
+
+vector_search.ipynb - Vector similarity system
+- Creates text embeddings using HuggingFace sentence transformers
+- Stores embeddings in FAISS vector database
+- Implements similarity search functionality
+- Creates tagged_description.txt for the main application
+
+MAIN APPLICATION
+---------------
+gradio_dashboard.py - Interactive web interface
+- Main application file that users interact with
+- Loads processed data from df_with_emotions.csv
+- Creates FAISS vector database from tagged descriptions
+- Implements two key functions:
+  * retrieve_semantic_recommendations() - Core recommendation logic
+  * recommend_books() - Formats results for display
+- Provides Gradio web interface with:
+  * Text input for book descriptions
+  * Category filter (All, Fiction, Nonfiction)
+  * Emotional tone filter (All, Happy, Surprising, Angry, Suspenseful, Sad)
+  * Gallery display of recommended books with covers and descriptions
+
+KEY FUNCTIONS AND COMPONENTS
+============================
+
+gradio_dashboard.py Functions:
+- retrieve_semantic_recommendations(query, category, tone, initial_top_k, final_top_k)
+  * Takes user query and finds similar books using FAISS
+  * Filters by category and sorts by emotional tone
+  * Returns filtered recommendations
+
+- recommend_books(query, category, tone)
+  * Formats recommendations for display
+  * Truncates long descriptions
+  * Handles multiple authors formatting
+  * Returns list of (thumbnail, caption) tuples
+
+Data Processing Pipeline:
+- Data cleaning and feature engineering in notebooks
+- Zero-shot classification for book categorization
+- Sentence-level emotion analysis for better accuracy
+- Vector embedding creation and FAISS storage
+
+TECHNOLOGY STACK
+================
+- Python for programming
+- Pandas/NumPy for data manipulation
+- HuggingFace Transformers for embeddings and classification
+- FAISS for vector similarity search
+- Gradio for web interface
+- Matplotlib/Seaborn for visualization
+
+HOW EXECUTION STARTS
+====================
+1. Run the notebooks in sequence to process the data:
+   - data-exploration.ipynb or Eda.ipynb (data cleaning)
+   - text_classification.ipynb (categorization)
+   - sentiment_analysis.ipynb (emotion analysis)
+   - vector_search.ipynb (embedding creation)
+
+2. Launch the main application:
+   - Run: python gradio_dashboard.py
+   - Opens web interface in browser
+   - Users can enter book descriptions and get recommendations
+
+DATA FLOW
+=========
+Raw Kaggle data → Data cleaning → Category classification → Emotion analysis → Vector embeddings → FAISS database → Gradio interface → User recommendations
+
+The system processes over 5,000 books, creating embeddings for similarity search and emotion scores for filtering. Users can search by describing what they want to read, filter by category (Fiction/Nonfiction), and sort by emotional tone to find books that match their mood and preferences.
+
+END RESULT
+==========
+A fully functional book recommendation system that provides personalized suggestions based on content similarity, book categories, and emotional tones. Users get visual recommendations with book covers, titles, authors, and descriptions, making it easy to discover new books that match their interests and current mood.

@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 from langchain_community.document_loaders import TextLoader
-from langchain.text_splitter import CharacterTextSplitter
+from langchain_text_splitters import CharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 
@@ -18,7 +18,7 @@ books['large_thumbnail'] = np.where(
 )
 
 raw_documents = TextLoader('tagged_description.txt', encoding='utf-8').load()
-splitter = CharacterTextSplitter(chunk_size=0, chunk_overlap=0,separator='\n')
+splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0, separator='\n')
 documents = splitter.split_documents(raw_documents)
 embedding_model = HuggingFaceEmbeddings(model_name='sentence-transformers/paraphrase-MiniLM-L6-v2')
 db_books = FAISS.from_documents(documents, embedding_model)
