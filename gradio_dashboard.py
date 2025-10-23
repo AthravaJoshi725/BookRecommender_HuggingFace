@@ -17,11 +17,20 @@ books['large_thumbnail'] = np.where(
     books['large_thumbnail']
 )
 
-raw_documents = TextLoader('tagged_description.txt', encoding='utf-8').load()
-splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0, separator='\n')
-documents = splitter.split_documents(raw_documents)
+# Load pre-built FAISS index for faster startup
 embedding_model = HuggingFaceEmbeddings(model_name='sentence-transformers/paraphrase-MiniLM-L6-v2')
-db_books = FAISS.from_documents(documents, embedding_model)
+try:
+    # Try to load pre-built index first
+    db_books = FAISS.load_local("faiss_index", embedding_model, allow_dangerous_deserialization=True)
+    print("SUCCESS: Loaded pre-built FAISS index")
+except:
+    # Fallback: build index from scratch if pre-built index not found
+    print("WARNING: Pre-built index not found, building from scratch...")
+    raw_documents = TextLoader('tagged_description.txt', encoding='utf-8').load()
+    splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0, separator='\n')
+    documents = splitter.split_documents(raw_documents)
+    db_books = FAISS.from_documents(documents, embedding_model)
+    print("SUCCESS: FAISS index built from scratch")
 
 def retrieve_semantic_recommendations(
         query: str,

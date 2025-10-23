@@ -1,8 +1,9 @@
-numpy
-pandas
+# Core dependencies for the book recommender app
 gradio
+pandas
+numpy
 
-# LangChain core and integrations used in gradio_dashboard.py
+# LangChain packages for document processing and vector operations
 langchain
 langchain-community
 langchain-text-splitters
@@ -15,6 +16,5 @@ torch
 faiss-cpu
 huggingface-hub
 
-# Optional: plotting for notebooks in repo
-matplotlib
-seaborn
+# Additional dependencies
+python-dateutil

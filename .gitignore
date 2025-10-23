@@ -1,6 +1,39 @@
-env
-idea
+# Virtual environment
+env/
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Jupyter notebooks (not needed for deployment)
+*.ipynb
+.ipynb_checkpoints/
+
+# Intermediate datasets (not needed for deployment)
 books_cleaned.csv
 books_data_cleaned.csv
 books_with_categories.csv
-df_with_emotions.csv
+
+# Build script (not needed for deployment)
+build_faiss_index.py
+
+# Documentation files
+BookRecomdocs.txt
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
