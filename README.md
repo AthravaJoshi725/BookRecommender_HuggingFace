@@ -7,9 +7,8 @@ sdk: gradio
 sdk_version: 4.44.0
 app_file: app.py
 pinned: false
-python_version: 3.10
 license: mit
-short_description: AI-powered book recommender with semantic search and emotion analysis
+short_description: AI book recommender using semantic search and emotions
 ---
 
 # 📚 Semantic Book Recommender
