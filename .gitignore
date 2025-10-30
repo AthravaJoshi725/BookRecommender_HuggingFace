@@ -5,7 +5,8 @@
 !gradio_dashboard.py
 !df_with_emotions.csv
 !tagged_description.txt
-!faiss_index/
+!faiss_index/index.faiss
+!faiss_index/index.pkl
 !requirements.txt
 !README.md
 !.gitignore
