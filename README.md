@@ -9,7 +9,7 @@ app_file: app.py
 pinned: false
 python_version: 3.10
 license: mit
-short_description: AI-powered book recommendation system using semantic search and emotion analysis
+short_description: AI-powered book recommender with semantic search and emotion analysis
 ---
 
 # 📚 Semantic Book Recommender
