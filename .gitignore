@@ -1,39 +1,32 @@
-# Virtual environment
-env/
-venv/
-.venv/
+# Ignore everything by default
+/*
+# Allow only essential files and folders for Hugging Face Space
+!app.py
+!gradio_dashboard.py
+!df_with_emotions.csv
+!tagged_description.txt
+!faiss_index/
+!requirements.txt
+!README.md
+!.gitignore
 
-# Python cache
+# Ignore __pycache__, venvs, and system files
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-
-# Jupyter notebooks (not needed for deployment)
+new_env/
 *.ipynb
-.ipynb_checkpoints/
-
-# Intermediate datasets (not needed for deployment)
+*.csv
+!df_with_emotions.csv
+!tagged_description.txt
+*.pkl
+*.faiss
+*.pyc
+.DS_Store
+Thumbs.db
+LICENSE
+BookRecomdocs.txt
 books_cleaned.csv
 books_data_cleaned.csv
 books_with_categories.csv
-
-# Build script (not needed for deployment)
-build_faiss_index.py
-
-# Documentation files
-BookRecomdocs.txt
-
-# IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
+sentiment_analysis.ipynb
+text_classification.ipynb
+vector_search.ipynb
